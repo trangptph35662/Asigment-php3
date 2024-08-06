@@ -9,12 +9,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Danh sách Sản phẩm</h4>
+                <h4 class="mb-sm-0">Danh sách tag</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                        <li class="breadcrumb-item active">Danh sách Sản phẩm</li>
+                        <li class="breadcrumb-item active">Danh sách tag</li>
                     </ol>
                 </div>
 
@@ -27,7 +27,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="card-title mb-0">Basic Datatables</h5>
-                    <a href="{{ route('post.create') }}" class="btn btn-sm btn-info">add</a>
+                    <a href="{{ route('tags.create') }}" class="btn btn-info btn-sm">Add New</a>
                 </div>
                 <div class="card-body">
                     <table id="example" class="table table-bordered dt-responsive nowrap table-striped align-middle"
@@ -35,16 +35,7 @@
                         <thead>
                             <tr>
                                 <th data-ordering="false">ID</th>
-                                <th data-ordering="false"> User</th>
-                                <th data-ordering="false">Category</th>
-                                <th data-ordering="false">Img_thumb</th>
-                                <th>Title </th>
-                                <th>Tags</th>
-                                <th>Sumary </th>
-                                <th>Author </th>
-                                <th>Is_new</th>
-                                <th>is_trending</th>
-                                <th>is_popular</th>
+                                <th data-ordering="false"> Name</th>
 
                                 <th>Action</th>
                             </tr>
@@ -55,21 +46,7 @@
 
                                     <td>{{ $item->id }}</td>
 
-                                    <td> {{ $item->user->name ?? 'No' }}</td>
-                                    <td>{{ $item->category->name }}</td>
-                                    <td> <img src="{{ \Storage::url($item->img_thumb) }}" alt="" width="70px">
-                                    </td>
-                                    <td>{{ $item->title }}</td>
-                                    <td>
-                                        @foreach ($item->tags as $tag)
-                                            <span class="badge bg-info">{{ $tag->name }}</span>
-                                        @endforeach
-                                    </td>
-                                    <td> {{ $item->sumary }}</td>
-                                    <td> {{ $item->author }}</td>
-                                    <td>{!! $item->is_new ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                    <td>{!! $item->is_trending ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
-                                    <td>{!! $item->is_popular ? '<span class="badge bg-primary">YES</span>' : '<span class="badge bg-danger">NO</span>' !!}</td>
+                                    <td> {{ $item->name }}</td>
 
                                     <td>
                                         <div class="dropdown d-inline-block">
@@ -78,16 +55,14 @@
                                                 <i class="ri-more-fill align-middle"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <li><a href="{{ route('post.show', $item->id) }}" class="dropdown-item"><i
-                                                            class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
-                                                </li>
-                                                <li><a href="{{ route('post.edit', $item->id) }}"
+
+                                                <li><a href="{{ route('tags.edit', $item->id) }}"
                                                         class="dropdown-item edit-item-btn"><i
                                                             class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                         Edit</a></li>
                                                 <li>
                                                     <a class="dropdown-item remove-item-btn">
-                                                        <form action="{{ route('post.destroy', $item->id) }}"
+                                                        <form action="{{ route('tags.destroy', $item->id) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('DELETE')

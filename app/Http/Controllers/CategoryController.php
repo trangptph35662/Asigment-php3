@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $data = Category::query()->latest('id')->paginate(10) ;
+        $data = Category::query()->latest('id')->paginate(10);
         return view('admin.categories.index', compact('data'));
     }
 
@@ -23,7 +23,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        $parentCategory = Category::query()->with('children')->whereNull('parent_id')->get() ;
+        $parentCategory = Category::query()->with('children')->whereNull('parent_id')->get();
         return view('admin.categories.create', compact('parentCategory'));
     }
 
@@ -33,11 +33,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
-       $data = $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'parent_id' => 'nullable|integer',
-        ]) ;
-        Category::query()->create($data) ;
+        ]);
+        Category::query()->create($data);
         return redirect()->route('category.index');
     }
 
@@ -55,8 +55,8 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
-        $parentCategory = Category::query()->with('children')->whereNull('parent_id')->get() ;
-        return view('admin.categories.edit', compact('category','parentCategory'));
+        $parentCategory = Category::query()->with('children')->whereNull('parent_id')->get();
+        return view('admin.categories.edit', compact('category', 'parentCategory'));
     }
 
     /**
@@ -68,9 +68,9 @@ class CategoryController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'parent_id' => 'nullable|integer',
-            ]) ;
-            $category->update($data) ;
-            return back() ;
+        ]);
+        $category->update($data);
+        return back();
     }
 
     /**
@@ -79,7 +79,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
-        $category->delete() ;
-        return back() ;
+        $category->delete();
+        return back();
     }
 }

@@ -1,7 +1,7 @@
 <header class="navigation fixed-top">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-white">
-            <a class="navbar-brand order-1" href="index.html">
+            <a class="navbar-brand order-1" href="{{ route('home') }}">
                 <img class="img-fluid" width="100px" src="{{ asset('theme/clients/reader/images/logo.png') }}"
                     alt="Reader | Hugo Personal Blog Template">
             </a>
@@ -10,21 +10,21 @@
                     @foreach ($categories as $item)
                         <li class="nav-item dropdown">
                             @if ($item->parent_id)
-                                <a class="nav-link" href="{{route('post_category', $item)}}" role="button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link" href="{{ route('post_category', $item) }}" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ $item->parent->name }} <i class="ti-angle-down ml-1"></i>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{route('post_category', $item)}}"> {{ $item->name }} </a>
+                                    <a class="dropdown-item" href="{{ route('post_category', $item) }}">
+                                        {{ $item->name }} </a>
 
                                 </div>
                             @else
-                                <a class="nav-link" href="{{route('post_category', $item)}}"> {{ $item->name }} </a>
+                                <a class="nav-link" href="{{ route('post_category', $item) }}"> {{ $item->name }} </a>
                             @endif
 
                         </li>
                     @endforeach
-
 
                     {{-- <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown"
@@ -49,10 +49,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="contact.html">Contact</a>
                     </li>
-
-
-
-
                 </ul>
             </div>
 
@@ -63,8 +59,10 @@
                 </select>
 
                 <!-- search -->
-                <form class="search-bar">
-                    <input id="search-query" name="s" type="search" placeholder="Type &amp; Hit Enter...">
+                <form action="{{ route('home') }}" method="GET" class="">
+                    @csrf
+                    <input id="search-query" name="search" type="text" placeholder="Type &amp; Hit Enter...">
+                    <button type="submit" class="btn-sm btn-info">Ok</button>
                 </form>
 
                 <button class="navbar-toggler border-0 order-1" type="button" data-toggle="collapse"
@@ -105,16 +103,19 @@
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
+                                <a class="dropdown-item" href="{{ route('post.index') }}">
+                                    Admin
+                                </a>
                             </div>
+
                         </li>
-                        
+
+
                     @endguest
-                   
+
                 </ul>
             </div>
 
         </nav>
     </div>
 </header>
-
-

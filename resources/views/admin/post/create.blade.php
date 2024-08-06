@@ -18,6 +18,19 @@
                 </select>
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-lg-3">
+                <label for="nameInput" class="form-label">Tag</label>
+            </div>
+            <div class="col-lg-9">
+                <select name="tags[]" class="form-select mb-3" multiple aria-label="Default select example">
+
+                    @foreach ($tags as $id => $name)
+                        <option value="{{ $id }}"> {{ $name }} </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
         <div class="row mb-3">
             <div class="col-lg-3">
@@ -57,31 +70,40 @@
                     'is_new' => 'primary',
                     'is_trending' => 'danger',
                     'is_popular' => 'success',
-                ]
+                ];
             @endphp
 
-            @foreach ($is as $key=>$color)
-            {{-- <div class="col-lg-3">
+            @foreach ($is as $key => $color)
+                {{-- <div class="col-lg-3">
                 <label for="timeInput" class="form-label"> {{$key}} </label>
             </div> --}}
-           
-            <div class="col-lg-9 form-switch-{{ $color }}">
-                <input type="checkbox" class="form-check-input" @if ($key == 'is_new')
-                    checked
-                @endif id="" value="1" name="{{$key}}" >
-                <label for="timeInput" class="form-label"> {{ \Str::convertCase($key, MB_CASE_TITLE) }} </label>
-            </div>
-           
+
+                <div class="col-lg-9 form-switch-{{ $color }}">
+                    <input type="checkbox" class="form-check-input" @if ($key == 'is_new') checked @endif
+                        id="" value="1" name="{{ $key }}">
+                    <label for="timeInput" class="form-label"> {{ \Str::convertCase($key, MB_CASE_TITLE) }} </label>
+                </div>
             @endforeach
-           
-            
+
+
         </div>
         <div class="row mb-3">
             <div class="col-lg-3">
                 <label for="leaveemails" class="form-label">Author</label>
             </div>
             <div class="col-lg-9">
-                <input type="text" name="author" id="" class="form-control">
+
+                @auth
+
+                    <select name="user_id" id="" disabled="disabled" class="form-select">
+                        @foreach ($user as $id => $name)
+                            <option @if (Auth::user()->id == $id) selected @endif value="{{ $id }}">
+                                {{ $name }} </option>
+                        @endforeach
+
+                    </select>
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                @endauth
             </div>
         </div>
 
@@ -93,16 +115,16 @@
 @endsection
 
 @section('script-libs')
-     <!-- apexcharts -->
-     <script src="/theme/admins/velzon/assets/libs/apexcharts/apexcharts.min.js"></script>
+    <!-- apexcharts -->
+    <script src="/theme/admins/velzon/assets/libs/apexcharts/apexcharts.min.js"></script>
 
-     <!-- Vector map-->
-     <script src="/theme/admins/velzon/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
-     <script src="/theme/admins/velzon/assets/libs/jsvectormap/maps/world-merc.js"></script>
- 
-     <!--Swiper slider js-->
-     <script src="/theme/admins/velzon/assets/libs/swiper/swiper-bundle.min.js"></script>
- 
-     <!-- Dashboard init -->
-     <script src="/theme/admins/velzon/assets/js/pages/dashboard-ecommerce.init.js"></script>
+    <!-- Vector map-->
+    <script src="/theme/admins/velzon/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
+    <script src="/theme/admins/velzon/assets/libs/jsvectormap/maps/world-merc.js"></script>
+
+    <!--Swiper slider js-->
+    <script src="/theme/admins/velzon/assets/libs/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Dashboard init -->
+    <script src="/theme/admins/velzon/assets/js/pages/dashboard-ecommerce.init.js"></script>
 @endsection

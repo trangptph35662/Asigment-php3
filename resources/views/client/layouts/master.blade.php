@@ -47,7 +47,7 @@
     <!-- /navigation -->
 
     <!-- start of banner -->
-        {{-- @include('client.layouts.banner') --}}
+       @yield('banner')
     <!-- end of banner -->
    @yield('content')
 
